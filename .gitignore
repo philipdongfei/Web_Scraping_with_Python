@@ -132,3 +132,9 @@ dmypy.json
 # python env
 ll_env/
 
+#data type
+*.json
+*.xml
+*.jl
+*.html
+*.csv

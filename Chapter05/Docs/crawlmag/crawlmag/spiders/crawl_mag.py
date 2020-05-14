@@ -2,12 +2,14 @@ import scrapy
 
 class MagSpider(scrapy.Spider):
     name = "magnet"
+    allowed_domains = ['mag234.com']
     start_urls = [
         'http://mag234.com/index/index',
         #'http://mag234.com/index/p2',
     ]
 
     def parse(self, response):
+        self.logger.info('A response from %s just arrived!', response.url)
         for link in response.css('ul.link-list li'):
             names = link.css('span.name::text').getall()
             for magnet in  link.css('li::attr(data-magnet)').getall():

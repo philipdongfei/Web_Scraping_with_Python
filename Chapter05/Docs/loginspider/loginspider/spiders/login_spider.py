@@ -4,20 +4,20 @@ def authentication_failed(response):
     # TODO: Check the contents of the response and return True if it failed
     # or False if it succeeded.
     #pass
-    if response.css('.title::text').get() == u"新浪邮箱":
+    if response.css('.title::text').get() == "Quotes to Scrape":
         return False
     else:
         return True
 
 class LoginSpider(scrapy.Spider):
-    name = 'mail_sina'
-    start_urls = ['https://mail.sina.com.cn/?from=mail']
+    name = 'quotes'
+    start_urls = ['http://quotes.toscrape.com/login']
 
     def parse(self, response):
         print("Existing settings: %s" % self.settings.attributes.keys())
         return scrapy.FormRequest.from_response(
             response,
-            formdata = {'username': 'dongfei154@sina.com', 'password': '1979416Philip'},
+            formdata = {'username': 'philip', 'password': '1979416'},
             callback=self.after_login
         )
 
@@ -28,6 +28,6 @@ class LoginSpider(scrapy.Spider):
 
         # continue scraping with authenticated session...
         yield {
-            'title': response.xpath('//td/span[@title]/text()'),
+            'author': response.xpath('//div/span[@itemprop="author"]/text()'),
         }
 

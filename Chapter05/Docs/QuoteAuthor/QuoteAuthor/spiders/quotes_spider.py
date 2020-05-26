@@ -34,6 +34,8 @@ class AuthorSpider(scrapy.Spider):
             yield response.follow(pagination_links, callback=self.parse)
 
     def parse_author(self, response):
+        # parse item here
+        self.state['items_count'] = self.state.get('items_count', 0) + 1
         def extract_with_css(query):
             return response.css(query).get(default='').strip()
 
